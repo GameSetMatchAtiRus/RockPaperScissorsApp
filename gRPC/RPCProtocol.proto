@@ -1,0 +1,43 @@
+syntax = "proto3";
+
+service GameService {
+  rpc GetBalance (UserRequest) returns (BalanceResponse);
+  rpc GetMatchList (Empty) returns (MatchListResponse);
+  rpc JoinGame (JoinGameRequest) returns (GameResultResponse);
+  rpc PlayGame (PlayGameRequest) returns (GameResultResponse);
+}
+
+message UserRequest {
+  int32 userId = 1;
+}
+
+message BalanceResponse {
+  double balance = 1;
+}
+
+message Empty {}
+
+message MatchListResponse {
+  repeated Match match = 1;
+}
+
+message Match {
+  int32 matchId = 1;
+  double bet = 2;
+  bool waitingForPlayer = 3;
+}
+
+message JoinGameRequest {
+  int32 matchId = 1;
+  int32 userId = 2;
+}
+
+message PlayGameRequest {
+  int32 matchId = 1;
+  int32 userId = 2;
+  string choice = 3; // "K", "H", "B"
+}
+
+message GameResultResponse {
+  string result = 1; // "Win", "Lose", "Draw"
+}
